@@ -1,1 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111111">
+  <meta name="description" content="Shop sportswear, casual fashion, shoes, boots and accessories at WearNova India.">
+  <title>WearNova | Fashion for Every Day</title>
 
+  <style>
+    :root {
+      --dark: #151515;
+      --accent: #d9ff43;
+      --light: #f6f6f2;
+      --muted: #777;
+      --white: #fff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--light);
+      color: var(--dark);
+    }
+
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+
+    .announcement {
+      background: var(--dark);
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 20px 6%;
+      background: white;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      white-space: nowrap;
+    }
+
+    .logo span { color: #6a7d00; }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    nav a {
+      color: var(--dark);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .cart-button, .primary-button {
+      background: var(--dark);
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .hero {
+      margin: 22px auto;
+      width: 94%;
+      min-height: 350px;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.84), rgba(0,0,0,.12)),
+        url("https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1600&q=85")
+        center 40% / cover;
+      color: white;
+    }
+
+    .hero-content {
+      max-width: 570px;
+      padding: 45px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 68px);
+      line-height: 1.02;
+      margin: 16px 0;
+      letter-spacing: -2px;
+    }
+
+    .hero p {
+      line-height: 1.7;
+      color: #eee;
+      max-width: 420px;
+    }
+
+    .hero .primary-button {
+      background: var(--accent);
+      color: var(--dark);
+      margin-top: 12px;
+    }
+
+    main {
+      width: 90%;
+      max-width: 1400px;
+      margin: 45px auto;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(25px, 4vw, 36px);
+      margin: 0 0 8px;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 25px 0;
+    }
+
+    .tools input, .tools select {
+      border: 1px solid #ddd;
+      background: white;
+      border-radius: 6px;
+      padding: 12px;
+      min-width: 180px;
+      flex: 1;
+    }
+
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-bottom: 25px;
+    }
+
+    .category-button {
+      border: 1px solid #ddd;
+      background: white;
+      padding: 10px 15px;
+      border-radius: 30px;
+      font-size: 13px;
+    }
+
+    .category-button.active {
+      background: var(--dark);
+      color: white;
+      border-color: var(--dark);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 9px;
+      overflow: hidden;
+      border: 1px solid #eee;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-image {
+      width: 100%;
+      aspect-ratio: 4 / 4.5;
+      object-fit: cover;
+      background: #eaeaea;
+    }
+
+    .product-info {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 10px;
+    }
+
+    .tag {
+      color: #626f16;
+      font-size: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .product-info h3 {
+      font-size: 15px;
+      margin: 0;
+    }
+
+    .product-description {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .price {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .old-price {
+      color: #999;
+      font-size: 12px;
+      font-weight: normal;
+      text-decoration: line-through;
+      margin-left: 5px;
+    }
+
+    .product-info select {
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 9px;
+      background: white;
+    }
+
+    .add-button {
+      border: none;
+      background: var(--accent);
+      padding: 12px;
+      border-radius: 5px;
+      font-weight: bold;
+      margin-top: auto;
+    }
+
+    .add-button:hover, .primary-button:hover {
+      opacity: .85;
+    }
+
+    .empty {
+      padding: 35px;
+      text-align: center;
+      color: var(--muted);
+      grid-column: 1 / -1;
+    }
+
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 60px 0;
+    }
+
+    .benefit {
+      background: white;
+      padding: 24px;
+      border-radius: 8px;
+    }
+
+    .benefit h3 { font-size: 16px; }
+    .benefit p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 40px 6%;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 25px;
+    }
+
+    footer p, footer a {
+      color: #ccc;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    footer a { margin-right: 12px; }
+
+    .copyright {
+      border-top: 1px solid #444;
+      margin-top: 25px;
+      padding-top: 18px;
+      color: #aaa;
+      font-size: 12px;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.5);
+      z-index: 10;
+      display: none;
+    }
+
+    .overlay.open { display: block; }
+
+    .cart-panel {
+      position: fixed;
+      z-index: 11;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: min(430px, 100%);
+      background: white;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform .25s ease;
+    }
+
+    .cart-panel.open { transform: translateX(0); }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 15px;
+    }
+
+    .cart-header h2 { margin: 0; }
+    .close-button { border: none; background: none; font-size: 27px; }
+
+    .cart-items { overflow-y: auto; flex: 1; }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 17px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .cart-item h4 { margin: 0 0 8px; }
+    .cart-item p { margin: 0 0 8px; font-size: 13px; color: var(--muted); }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quantity-controls button {
+      border: 1px solid #ddd;
+      background: white;
+      padding: 4px 9px;
+      border-radius: 4px;
+    }
+
+    .remove-button {
+      border: none;
+      background: none;
+      color: #b00020;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .cart-bottom {
+      border-top: 1px solid #eee;
+      padding-top: 16px;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 19px;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+
+    .checkout-button {
+      width: 100%;
+      background: #168342;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 14px;
+      font-weight: bold;
+    }
+
+    .cart-note {
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    @media (max-width: 950px) {
+      .product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      nav { gap: 10px; }
+      nav a { font-size: 12px; }
+    }
+
+    @media (max-width: 650px) {
+      header { padding: 14px 4%; flex-wrap: wrap; }
+      .logo { font-size: 23px; }
+      nav { order: 3; width: 100%; justify-content: space-between; }
+      nav a { font-size: 11px; }
+      .hero { min-height: 340px; }
+      .hero-content { padding: 25px; }
+      main { width: 92%; margin-top: 30px; }
+      .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
+      .product-info { padding: 10px; gap: 8px; }
+      .product-info h3 { font-size: 13px; }
+      .price { font-size: 16px; }
+      .benefits { grid-template-columns: 1fr; margin: 35px 0; }
+      .section-heading { align-items: start; flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="announcement">
+    WELCOME TO WEARNOVA · YOUR EVERYDAY STYLE DESTINATION
+  </div>
+
+  <header>
+    <a class="logo" href="#" style="color:inherit;text-decoration:none">
+      Wear<span>Nova</span>.
+    </a>
+
+    <nav aria-label="Main navigation">
+      <a href="#products">ALL PRODUCTS</a>
+      <a href="#products" data-category-link="Sportswear">SPORTS</a>
+      <a href="#products" data-category-link="Casual">CASUAL</a>
+      <a href="#products" data-category-link="Footwear">FOOTWEAR</a>
+    </nav>
+
+    <button class="cart-button" id="open-cart">
+      BAG (<span id="cart-count">0</span>)
+    </button>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="eyebrow">NEW SEASON · NEW STYLE</div>
+      <h1>FIND YOUR<br>EVERYDAY FIT.</h1>
+      <p>
+        From sportswear to streetwear, discover clothing, footwear
+        and accessories for every side of you.
+      </p>
+      <button class="primary-button" id="shop-now">SHOP COLLECTIONS →</button>
+    </div>
+  </section>
+
+  <main>
+    <section id="products">
+      <div class="section-heading">
+        <div>
+          <h2>Shop the collection.</h2>
+          <p>Find your next favourite. Choose your style.</p>
+        </div>
+        <strong id="product-count">12 products</strong>
+      </div>
+
+      <div class="tools">
+        <input
+          id="search"
+          type="search"
+          placeholder="Search shirts, shoes, boots..."
+          aria-label="Search products"
+        >
+
+        <select id="sort" aria-label="Sort products">
+          <option value="featured">Sort: Featured</option>
+          <option value="low">Price: Low to High</option>
+          <option value="high">Price: High to Low</option>
+          <option value="name">Name: A to Z</option>
+        </select>
+      </div>
+
+      <div class="categories" id="categories">
+        <button class="category-button active" data-category="All">All items</button>
+        <button class="category-button" data-category="Sportswear">Sportswear</button>
+        <button class="category-button" data-category="Casual">Casual wear</button>
+        <button class="category-button" data-category="Footwear">Footwear</button>
+        <button class="category-button" data-category="Accessories">Accessories</button>
+      </div>
+
+      <div class="product-grid" id="product-grid"></div>
+    </section>
+
+    <section class="benefits">
+      <div class="benefit">
+        <div style="font-size:25px">✦</div>
+        <h3>Everyday Style</h3>
+        <p>Explore sports, casual and street-inspired looks for your wardrobe.</p>
+      </div>
+      <div class="benefit">
+        <div style="font-size:25px">↗</div>
+        <h3>Easy Ordering</h3>
+        <p>Add your favourite items to your bag and send an order request on WhatsApp.</p>
+      </div>
+      <div class="benefit">
+        <div style="font-size:25px">♡</div>
+        <h3>Your Style, Your Way</h3>
+        <p>Browse products and choose available sizes before placing your order.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div>
+        <div class="logo">Wear<span>Nova</span>.</div>
+        <p>Fashion for every day.</p>
+      </div>
+      <div>
+        <strong>Explore</strong>
+        <p><a href="#products">All products</a><a href="#products">Collections</a></p>
+      </div>
+      <div>
+        <strong>Contact</strong>
+        <p>Contact us to ask about products, orders and delivery.</p>
+        <a id="footer-whatsapp" href="#products">WhatsApp ordering setup pending</a>
+      </div>
+    </div>
+    <div class="copyright">
+      © <span id="year"></span> WearNova. All rights reserved.
+      Product availability and delivery are confirmed when an order is reviewed.
+    </div>
+  </footer>
+
+  <div class="overlay" id="overlay"></div>
+
+  <aside class="cart-panel" id="cart-panel" aria-label="Shopping cart">
+    <div class="cart-header">
+      <h2>Your shopping bag</h2>
+      <button class="close-button" id="close-cart" aria-label="Close cart">×</button>
+    </div>
+
+    <div class="cart-items" id="cart-items"></div>
+
+    <div class="cart-bottom">
+      <div class="total-row">
+        <span>Subtotal</span>
+        <span id="cart-total">₹0</span>
+      </div>
+      <button class="checkout-button" id="checkout">ORDER ON WHATSAPP</button>
+      <p class="cart-note">
+        This is an order request, not a completed payment.
+        Confirm stock, delivery charges, payment method and final total with the store.
+      </p>
+    </div>
+  </aside>
+
+  <script>
+    // IMPORTANT:
+    // Replace this example number with your own WhatsApp number.
+    // Use India's country code 91 followed by your number, without + or spaces.
+    const WHATSAPP_NUMBER = "91XXXXXXXXXX";
+
+    const products = [
+      {
+        id: 1, name: "Performance Training Tee", category: "Sportswear",
+        price: 599, oldPrice: 799, tag: "Sports",
+        description: "A versatile tee for workouts and everyday activity.",
+        image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=80",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 2, name: "Classic Casual Shirt", category: "Casual",
+        price: 899, oldPrice: 1199, tag: "Everyday",
+        description: "An easy-to-style shirt for daily wear.",
+        image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=700&q=80",
+        sizes: ["S", "M", "L", "XL", "XXL"]
+      },
+      {
+        id: 3, name: "Everyday Sneakers", category: "Footwear",
+        price: 1499, oldPrice: 1899, tag: "Footwear",
+        description: "Versatile sneakers for your everyday outfits.",
+        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80",
+        sizes: ["6", "7", "8", "9", "10", "11"]
+      },
+      {
+        id: 4, name: "Urban Hoodie", category: "Casual",
+        price: 1299, oldPrice: 1599, tag: "Streetwear",
+        description: "A comfortable layer for relaxed days.",
+        image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=700&q=80",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 5, name: "Active Training Pants", category: "Sportswear",
+        price: 999, oldPrice: 1299, tag: "Sports",
+        description: "Flexible trousers for training and casual use.",
+        image: "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=700&q=80",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 6, name: "Classic Ankle Boots", category: "Footwear",
+        price: 1999, oldPrice: 2499, tag: "Boots",
+        description: "A timeless boot style for casual outfits.",
+        image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=700&q=80",
+        sizes: ["6", "7", "8", "9", "10"]
+      },
+      {
+        id: 7, name: "Relaxed Fit Jeans", category: "Casual",
+        price: 1199, oldPrice: 1499, tag: "Everyday",
+        description: "Relaxed denim made for easy everyday styling.",
+        image: "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=700&q=80",
+        sizes: ["28", "30", "32", "34", "36"]
+      },
+      {
+        id: 8, name: "Running Shoes", category: "Footwear",
+        price: 1799, oldPrice: 2299, tag: "Sports",
+        description: "Sport-inspired shoes for an active lifestyle.",
+        image: "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=700&q=80",
+        sizes: ["6", "7", "8", "9", "10", "11"]
+      },
+      {
+        id: 9, name: "Sports Jacket", category: "Sportswear",
+        price: 1599, oldPrice: 1999, tag: "Sports",
+        description: "A versatile jacket for warm-ups and layering.",
+        image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=700&q=80",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 10, name: "Everyday Cap", category: "Accessories",
+        price: 399, oldPrice: 499, tag: "Accessory",
+        description: "A simple finishing touch for casual outfits.",
+        image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=700&q=80",
+        sizes: ["One size"]
+      },
+      {
+        id: 11, name: "Casual Backpack", category: "Accessories",
+        price: 999, oldPrice: 1299, tag: "Accessory",
+        description: "A practical bag for everyday essentials.",
+        image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=80",
+        sizes: ["One size"]
+      },
+      {
+        id: 12, name: "Classic Polo Tee", category: "Casual",
+        price: 699, oldPrice: 899, tag: "Everyday",
+        description: "A versatile polo for smart-casual outfits.",
+        image: "https://images.unsplash.com/photo-1625910513413-5fc45c1f1d2d?auto=format&fit=crop&w=700&q=80",
+        sizes: ["S", "M", "L", "XL", "XXL"]
+      }
+    ];
+
+    let selectedCategory = "All";
+    let cart = [];
+
+    const grid = document.getElementById("product-grid");
+    const searchInput = document.getElementById("search");
+    const sortSelect = document.getElementById("sort");
+    const cartPanel = document.getElementById("cart-panel");
+    const overlay = document.getElementById("overlay");
+
+    function money(amount) {
+      return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 0
+      }).format(amount);
+    }
+
+    function renderProducts() {
+      const query = searchInput.value.trim().toLowerCase();
+
+      let visible = products.filter(product => {
+        const matchesCategory = selectedCategory === "All" ||
+          product.category === selectedCategory;
+
+        const matchesSearch =
+          (product.name + " " + product.category + " " +
+           product.description + " " + product.tag)
+          .toLowerCase().includes(query);
+
+        return matchesCategory && matchesSearch;
+      });
+
+      if (sortSelect.value === "low") {
+        visible.sort((a, b) => a.price - b.price);
+      } else if (sortSelect.value === "high") {
+        visible.sort((a, b) => b.price - a.price);
+      } else if (sortSelect.value === "name") {
+        visible.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      document.getElementById("product-count").textContent =
+        visible.length + (visible.length === 1 ? " product" : " products");
+
+      if (!visible.length) {
+        grid.innerHTML = '<div class="empty">No products found. Try another search.</div>';
+        return;
+      }
+
+      grid.innerHTML = visible.map(product => `
+        <article class="product-card">
+          <img
+            class="product-image"
+            src="${product.image}"
+            alt="${product.name}"
+            loading="lazy"
+            onerror="this.onerror=null;this.src='https://placehold.co/600x700/f0f0f0/333333?text=WearNova';"
+          >
+          <div class="product-info">
+            <span class="tag">${product.tag}</span>
+            <h3>${product.name}</h3>
+            <p class="product-description">${product.description}</p>
+            <div class="price">
+              ${money(product.price)}
+              <span class="old-price">${money(product.oldPrice)}</span>
+            </div>
+            <label>
+              <span style="font-size:12px">Choose size</span>
+              <select id="size-${product.id}" aria-label="Choose size for ${product.name}">
+                ${product.sizes.map(size =>
+                  `<option value="${size}">${size}</option>`
+                ).join("")}
+              </select>
+            </label>
+            <button class="add-button" data-add="${product.id}">
+              ADD TO BAG +
+            </button>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function addToCart(productId) {
+      const product = products.find(item => item.id === productId);
+      if (!product) return;
+
+      const size = document.getElementById("size-" + productId).value;
+      const existing = cart.find(item =>
+        item.id === productId && item.size === size
+      );
+
+      if (existing) {
+        existing.quantity++;
+      } else {
+        cart.push({ id: productId, size, quantity: 1 });
+      }
+
+      renderCart();
+      openCart();
+    }
+
+    function renderCart() {
+      const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const total = cart.reduce((sum, item) => {
+        const product = products.find(p => p.id === item.id);
+        return sum + (product ? product.price * item.quantity : 0);
+      }, 0);
+
+      document.getElementById("cart-count").textContent = count;
+      document.getElementById("cart-total").textContent = money(total);
+
+      const container = document.getElementById("cart-items");
+
+      if (!cart.length) {
+        container.innerHTML = '<p class="empty">Your bag is empty. Let’s find something you love!</p>';
+        return;
+      }
+
+      container.innerHTML = cart.map(item => {
+        const product = products.find(p => p.id === item.id);
+        return `
+          <div class="cart-item">
+            <div>
+              <h4>${product.name}</h4>
+              <p>Size: ${item.size} · ${money(product.price)} each</p>
+              <div class="quantity-controls">
+                <button data-change="${item.id}|${item.size}|-1" aria-label="Decrease quantity">−</button>
+                <span>${item.quantity}</span>
+                <button data-change="${item.id}|${item.size}|1" aria-label="Increase quantity">+</button>
+              </div>
+              <button class="remove-button" data-remove="${item.id}|${item.size}">Remove</button>
+            </div>
+            <strong>${money(product.price * item.quantity)}</strong>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function openCart() {
+      cartPanel.classList.add("open");
+      overlay.classList.add("open");
+    }
+
+    function closeCart() {
+      cartPanel.classList.remove("open");
+      overlay.classList.remove("open");
+    }
+
+    function orderOnWhatsApp() {
+      if (!cart.length) {
+        alert("Your shopping bag is empty. Please add a product first.");
+        return;
+      }
+
+      if (!/^91\d{10}$/.test(WHATSAPP_NUMBER)) {
+        alert("The store owner must set a valid WhatsApp number in the website code before orders can be sent. Please contact the store owner.");
+        return;
+      }
+
+      let total = 0;
+      const lines = cart.map(item => {
+        const product = products.find(p => p.id === item.id);
+        total += product.price * item.quantity;
+        return `${product.name} | Size: ${item.size} | Qty: ${item.quantity} | ${money(product.price * item.quantity)}`;
+      });
+
+      const message = [
+        "Hello WearNova! I would like to request an order:",
+        "",
+        ...lines,
+        "",
+        "Subtotal: " + money(total),
+        "Please confirm availability, delivery charges and payment options.",
+        "",
+        "My name:",
+        "My delivery city and PIN code:"
+      ].join("\n");
+
+      const url = "https://wa.me/" + WHATSAPP_NUMBER +
+        "?text=" + encodeURIComponent(message);
+
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+
+    document.getElementById("categories").addEventListener("click", event => {
+      const button = event.target.closest("[data-category]");
+      if (!button) return;
+
+      selectedCategory = button.dataset.category;
+
+      document.querySelectorAll(".category-button").forEach(item => {
+        item.classList.toggle("active", item === button);
+      });
+
+      renderProducts();
+    });
+
+    grid.addEventListener("click", event => {
+      const button = event.target.closest("[data-add]");
+      if (button) addToCart(Number(button.dataset.add));
+    });
+
+    document.getElementById("cart-items").addEventListener("click", event => {
+      const changeButton = event.target.closest("[data-change]");
+      const removeButton = event.target.closest("[data-remove]");
+
+      if (changeButton) {
+        const [id, size, amount] = changeButton.dataset.change.split("|");
+        const item = cart.find(entry =>
+          entry.id === Number(id) && entry.size === size
+        );
+
+        if (item) {
+          item.quantity += Number(amount);
+          if (item.quantity <= 0) {
+            cart = cart.filter(entry => entry !== item);
+          }
+        }
+        renderCart();
+      }
+
+      if (removeButton) {
+        const [id, size] = removeButton.dataset.remove.split("|");
+        cart = cart.filter(item =>
+          !(item.id === Number(id) && item.size === size)
+        );
+        renderCart();
+      }
+    });
+
+    searchInput.addEventListener("input", renderProducts);
+    sortSelect.addEventListener("change", renderProducts);
+
+    document.querySelectorAll("[data-category-link]").forEach(link => {
+      link.addEventListener("click", () => {
+        selectedCategory = link.dataset.categoryLink;
+        document.querySelectorAll(".category-button").forEach(button => {
+          button.classList.toggle(
+            "active",
+            button.dataset.category === selectedCategory
+          );
+        });
+        renderProducts();
+      });
+    });
+
+    document.getElementById("shop-now").addEventListener("click", () => {
+      document.getElementById("products").scrollIntoView({ behavior: "smooth" });
+    });
+
+    document.getElementById("open-cart").addEventListener("click", openCart);
+    document.getElementById("close-cart").addEventListener("click", closeCart);
+    overlay.addEventListener("click", closeCart);
+    document.getElementById("checkout").addEventListener("click", orderOnWhatsApp);
+
+    document.getElementById("footer-whatsapp").addEventListener("click", event => {
+      if (!/^91\d{10}$/.test(WHATSAPP_NUMBER)) {
+        event.preventDefault();
+        alert("The store owner still needs to configure the WhatsApp number.");
+      } else {
+        event.preventDefault();
+        window.open("https://wa.me/" + WHATSAPP_NUMBER, "_blank", "noopener,noreferrer");
+      }
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    renderProducts();
+    renderCart();
+  </script>
+</body>
+</html>
